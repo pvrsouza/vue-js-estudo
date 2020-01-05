@@ -12,10 +12,50 @@
 <body>
     <div id="app">
 
-        <div class="panel scores">1</div>
-        <div class="panel result">2</div>
-        <div class="panel buttons">3</div>
-        <div class="panel logs">4</div>
+        <div class="panel scores">
+            <div class="score">
+                <h1>Jogador</h1>
+                <div class="life-bar">
+                    <div class="life" 
+                        :class="{danger: playerLife < 20}" 
+                        :style="{width: playerLife + '%'}">
+                </div>
+
+                </div>
+                <div>{{ playerLife }}%</div>
+            </div>
+
+            <div class="score">
+                <h1>Monstro</h1>
+                <div class="life-bar">
+                    <div class="life" 
+                        :class="{danger: monsterLife < 20}" 
+                        :style="{width: monsterLife + '%'}">
+                </div>
+                </div>
+                <div>{{ monsterLife }}%</div>
+            </div>
+        </div>
+        <div v-if="hasResult" class="panel result">
+            <div v-if="monsterLife == 0" class="win">Você ganhou!!</div>
+            <div v-if="playerLife == 0 " class="lose">Você perdeu!!</div>
+        </div>
+        <div class="panel buttons">
+            <template v-if="running">
+                <button class="btn attack" @click="attack(false)">Ataque</button>
+                <button class="btn special-attack" @click="attack(true)">Ataque Especial</button>
+                <button class="btn heal" @click="healAndHurt">Curar</button>
+                <button class="btn give-up" 
+                    @click="running = false">Desistir</button>
+            </template>
+            <button v-else class="btn new-game" 
+                @click="startGame">Iniciar Jogo</button>
+        </div>
+        <div v-if="logs.length" class="panel logs">
+            <ul>
+                <li v-for="log in logs" :class="log.clazz" class="log" >{{ log.text }}</li>
+            </ul>
+        </div>
 
     </div>
     <script src="app.js"></script>
