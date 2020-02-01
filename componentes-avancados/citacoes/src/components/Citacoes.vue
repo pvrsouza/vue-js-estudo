@@ -4,7 +4,14 @@
       <button @click="numero--">&lt;</button>
       <button @click="numero++">&gt;</button>
     </span>
-    <Citacao :citacao="citacoes[indice].texto" />
+    <!-- <Citacao :citacao="citacoes[indice].texto"/> -->
+    <Citacao :titulo="Teste">
+      <p slot="texto">{{ citacoes[indice].texto }}</p>
+      <template slot="autor">
+        <h1>{{ citacoes[indice].autor }}</h1>
+      </template>
+      <h6 slot="fonte">{{ citacoes[indice].fonte }}</h6>
+    </Citacao>
   </div>
 </template>
 
@@ -48,5 +55,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+h1 {
+  color: blue;
 }
 </style>
